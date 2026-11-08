@@ -90,6 +90,7 @@ nav:
       - 浏览器与页面工具: browser.md
       - Skills 与交付: discovery.md
   - 实践:
+      - 本地工作区与云端协作: practices/local-workspaces.md
       - 减少回合与延迟: practices/performance.md
       - 超时与恢复演练: practices/recovery.md
       - 无浏览器与人工接管: practices/handoff.md

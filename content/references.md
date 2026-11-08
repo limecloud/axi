@@ -38,6 +38,40 @@ CLI 指南站点在本次采集返回 403，使用其公开源码正文核对，
 
 AX、AUI、AXI 的缩写尚未构成唯一统一的行业用语。交流时应写清全称与讨论层次，不仅凭缩写判断设计是否相同。
 
+## 官方插件样本与本地工作区依据
+
+2026-11-08读取OpenAI官方市场目录、manifest和下列README/方法，冻结提交`d420d13051bffe4543ed39e30fa46b87148e47dd`。官方收录不等于速度排名；本轮未安装或运行这些插件，不将静态方法文字声称为实际宿主性能。
+
+| 来源 | 已读机制 | 采用与边界 |
+| --- | --- | --- |
+| [官方市场目录](https://github.com/openai/plugins/tree/d420d13051bffe4543ed39e30fa46b87148e47dd) | 原生插件/方法/工具按实际组件交付 | 载体与业务能力分开，按实际宿主冻结支持范围 |
+| [Creative Production MCP说明](https://github.com/openai/plugins/blob/d420d13051bffe4543ed39e30fa46b87148e47dd/plugins/creative-production/mcp/README.md)及produce方法 | 本地修订看板、原始文件/有限预览/trace，open创建视图、后续小回执增量更新 | 同任务同视图，完整文件与轻回执分开；公开tree未取得核心store脚本，证据限于README和方法 |
+| [Figma use方法](https://github.com/openai/plugins/blob/d420d13051bffe4543ed39e30fa46b87148e47dd/plugins/figma/skills/figma-use/SKILL.md) | 一次发现所需Schema、精确ID、类型按需读取 | 精确定位与有界上下文，不把其原子编辑声明推导为任意实现已支持 |
+| [Canva编辑方法](https://github.com/openai/plugins/blob/d420d13051bffe4543ed39e30fa46b87148e47dd/plugins/canva/skills/canva-edit-design/SKILL.md) | transaction、operations、preview、commit/cancel | 相关编辑组合，保留事务或部分完成语义；不改变AXI核心只读批量范围 |
+| [Adobe批量方法](https://github.com/openai/plugins/blob/d420d13051bffe4543ed39e30fa46b87148e47dd/plugins/adobe/skills/adobe-batch-edit-photos/SKILL.md) | preset按需发现、先样张、widget及非widget路径 | 渐进呈现与批次验证；非widget仍上传，不据此称纯本地 |
+| [Remotion Studio方法](https://github.com/openai/plugins/blob/d420d13051bffe4543ed39e30fa46b87148e47dd/plugins/remotion/skills/remotion-studio/SKILL.md) | 本机工程、已有Studio复用、CLI渲染与真实URL | CLI与可选本地网页组合，不能从目录存在推导执行成功 |
+| [HyperFrames CLI方法](https://github.com/openai/plugins/blob/d420d13051bffe4543ed39e30fa46b87148e47dd/plugins/hyperframes/skills/hyperframes-cli/SKILL.md) | HTML源、headless JSON检查、preview/render与质量档 | 源资料和交付分开、机器入口不依赖GUI |
+| [Vercel插件说明](https://github.com/openai/plugins/blob/d420d13051bffe4543ed39e30fa46b87148e47dd/plugins/vercel/README.md)及CLI/verification方法 | 意图/实体/路径元数据、按任务reference、浏览器/API/真实数据核验 | 定位和方法分层，少工具不自动证明快或完整 |
+| [Supabase方法](https://github.com/openai/plugins/blob/d420d13051bffe4543ed39e30fa46b87148e47dd/plugins/supabase/skills/supabase/SKILL.md) | 实际help、依赖/Schema检查、有界失败处理 | 先真实发现，保留阻塞，避免无限重试 |
+| [Cloudflare官方MCP](https://developers.cloudflare.com/agents/model-context-protocol/cloudflare/servers-for-cloudflare/)及官方插件配置 | search/execute按需API发现与Code Mode | 确定编排放代码，不从Token宣传数推导其他任务倍数，不开放任意执行旁路 |
+| [OpenAI Plugin Eval](https://github.com/openai/plugins/blob/d420d13051bffe4543ed39e30fa46b87148e47dd/plugins/plugin-eval/README.md)及benchmark-harness | 真实codex exec、成功清单、原始日志和用量；静态估计与实测分开 | 任务级性能/正确性证据，保留失败与样本条件 |
+| [ChatCut固定源码](https://github.com/ChatCut-Inc/agent-plugin/tree/5b93f3afca456dc1dd1da01661ea3825846f83a8) | Desktop/local MCP、实际活动项目验证、旧Web项目与loopback媒体导入 | 页面/文件/执行位置分别声明；部分路线会上传，不能照搬为无隐式传输保证 |
+| [OpenAI元数据优化](https://developers.openai.com/plugins/guides/optimize-metadata.md)、[工具规划](https://developers.openai.com/plugins/plan/tools.md) | 直接/间接/负例激活、明确输入与有限结果 | 正确首调先于减少点击，按任务评测选择准确性 |
+| [MCP elicitation](https://modelcontextprotocol.io/specification/2026-07-28/client/elicitation.md) | 客户端能力声明、form/URL、枚举和拒绝/取消 | 优先宿主原生选择；协议定义不证明特定宿主均支持，不收敏感输入或假定统一弹窗API |
+
+| 文件与系统来源 | 已读机制 | 采用与边界 |
+| --- | --- | --- |
+| [Obsidian存储说明](https://github.com/obsidianmd/obsidian-help/blob/master/en/Files%20and%20folders/How%20Obsidian%20stores%20data.md)、[VS Code工作区](https://code.visualstudio.com/docs/editing/workspaces/workspaces) | 普通文件夹、Markdown/外部编辑、工作区配置及可重建cache | 目录作为用户内容边界，原操作事务不当cache清空 |
+| [Quarto项目](https://quarto.org/docs/projects/quarto-projects.html)及[文本源](https://quarto.org/docs/get-started/hello/text-editor.html) | 文本/配置源、多格式生成、output-dir与预览 | 源和派生交付分开，避免多份可写权威源 |
+| [Remotion资源](https://www.remotion.dev/docs/assets.md)、[渲染CLI](https://www.remotion.dev/docs/cli/render.md) | 相对媒体引用与本地输出 | 文件夹可容纳多种交付，逐格式验证不泛称任意媒体支持 |
+| [Comfy CLI](https://docs.comfy.org/agent-tools/cli.md)、[MCP](https://docs.comfy.org/agent-tools/mcp.md)及[首次生成](https://docs.comfy.org/get_started/first_generation.md) | 本机执行、能力/工作流/结果取得、CLI下载磁盘 | CLI/MCP互补及按实际能力运行；不宣称采用方已集成这些模型 |
+| [Blender依赖打包](https://docs.blender.org/manual/en/latest/files/blend/packed_data.html) | 可打包与不可打包依赖各有边界 | 交接清单记录缺依赖和质量范围 |
+| [Local-first论文](https://www.inkandswitch.com/essay/local-first/) | 本地内容为主、可选云端 | 不是浏览器cache，不要求所有远程领域本地化，不强制构建CRDT平台 |
+| [SQLite场景](https://www.sqlite.org/whentouse.html)、[应用文件格式](https://www.sqlite.org/appfileformat.html)、[WAL](https://www.sqlite.org/wal.html)、[备份](https://www.sqlite.org/backup.html) | 嵌入式事务、本机并发边界和一致快照 | 普通文件与内部事务分工，WAL不作网络多机协议，数据库快照不保证外部媒体一致 |
+| [Apple目录](https://developer.apple.com/library/archive/documentation/FileManagement/Conceptual/FileSystemProgrammingGuide/FileSystemOverview/FileSystemOverview.html)、[Windows Known Folder](https://learn.microsoft.com/en-us/windows/win32/shell/knownfolderid)、[XDG Base Directory](https://specifications.freedesktop.org/basedir/latest/) | 文档/应用数据/缓存/临时目录分工、重定向及有效绝对路径 | 产品公布OS默认根和解析，不硬编码用户名或把项目藏cache；混合平台文档按对应OS解释 |
+
+freedesktop的xdg-user-dirs入口在本次访问受限，未将其挑战页当正文；不据此规定未经核验的目录API。具体默认目录、渐进引导和是否使用远程能力由产品目标决定，来源不构成统一拓扑或通用性能承诺。
+
 ## 其他一手资料与设计取舍
 
 | 来源 | 可核对的依据 | 采用与证据边界 |

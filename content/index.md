@@ -20,6 +20,7 @@ AXI（Agent eXperience Interface）描述产品如何让 Agent **找到能力、
 | 开发 Agent 客户端 | [客户端指南](develop/client.md) | 按需发现、缓存、执行和核验 |
 | 改进网页操作 | [浏览器指南](browser.md) | 提供可定位控件和可选页面工具 |
 | 优化速度 | [性能实践](practices/performance.md) | 测量并减少无效回合与重复读取 |
+| 设计本地产品 | [本地工作区](practices/local-workspaces.md) | 划分项目文件、内部状态、独立本地、在线能力和协作 |
 | 验证采用程度 | [符合性](verification.md) | 声明覆盖范围和未验证依赖 |
 
 ## AXI 包含什么

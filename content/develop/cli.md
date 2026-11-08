@@ -17,6 +17,8 @@ product operation get --key review_contract_001 --format json
 
 ## I/O 合同
 
+人类TTY可以交互输入项目名、存放目录或已有项目；Agent也可以按需使用宿主原生选择或对话补问，参数齐备和默认政策适用时不重复提问，不先要求选择运行拓扑。显式机器模式与非TTY不能等待不可见向导；有适用且获准的默认目录政策时回显实际位置，否则返回具体缺项。人类交互与无人值守分别测试，见[项目目录实践](../practices/local-workspaces.md#workspace-directory)。
+
 机器模式的 stdout 只输出一个完整 JSON 文档，诊断到 stderr；进度不得混入 JSON。大输入用 stdin 或文件，敏感参数避免出现在进程参数和 Shell 历史。文件与命令边界需正确引用，不能把 JSON 转义当 Shell 转义。
 
 ## 命令行设计约定
