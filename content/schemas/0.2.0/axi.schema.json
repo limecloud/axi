@@ -1,0 +1,758 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:axi-draft:0.2.0",
+  "title": "AXI 0.2.0 draft JSON representation",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/catalog"
+    },
+    {
+      "$ref": "#/$defs/action"
+    },
+    {
+      "$ref": "#/$defs/result"
+    },
+    {
+      "$ref": "#/$defs/page"
+    },
+    {
+      "$ref": "#/$defs/batch"
+    }
+  ],
+  "$defs": {
+    "extensions": {
+      "type": "object",
+      "patternProperties": {
+        "^[a-z][a-z0-9-]*(\\.[a-z][a-z0-9-]*)+/[A-Za-z0-9_.-]+$": {}
+      },
+      "additionalProperties": false
+    },
+    "context": {
+      "type": "object",
+      "properties": {
+        "scope_id": {
+          "type": "string",
+          "minLength": 1,
+          "description": "服务端验证的隔离范围引用"
+        },
+        "resource_id": {
+          "type": "string",
+          "minLength": 1,
+          "description": "当前资源的完整标识"
+        },
+        "revision": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "description": "对象版本；客户端按不透明条件使用"
+        }
+      },
+      "required": [
+        "scope_id"
+      ],
+      "additionalProperties": false
+    },
+    "snapshot": {
+      "type": "object",
+      "properties": {
+        "mode": {
+          "enum": [
+            "consistent",
+            "best_effort"
+          ]
+        },
+        "revision": {
+          "type": "string",
+          "minLength": 1,
+          "description": "对象版本；客户端按不透明条件使用"
+        }
+      },
+      "required": [
+        "mode"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "mode": {
+                "const": "consistent"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "revision"
+            ]
+          }
+        }
+      ]
+    },
+    "operation": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "description": "提供方操作标识"
+        },
+        "key": {
+          "type": "string",
+          "minLength": 1,
+          "description": "原始幂等键"
+        },
+        "input_digest": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "description": "固定输入摘要；sha256 加 64 位小写十六进制"
+        },
+        "recover_action": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*(\\.[a-z][a-z0-9_]*)+$",
+          "description": "原操作只读恢复动作"
+        }
+      },
+      "required": [
+        "key",
+        "input_digest",
+        "recover_action"
+      ],
+      "additionalProperties": false
+    },
+    "error": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "anyOf": [
+            {
+              "enum": [
+                "invalid_input",
+                "missing_context",
+                "unauthenticated",
+                "forbidden",
+                "not_found",
+                "revision_conflict",
+                "idempotency_conflict",
+                "operation_expired",
+                "cursor_invalid",
+                "unsupported_version",
+                "rate_limited",
+                "unavailable",
+                "deadline_exceeded",
+                "result_unknown"
+              ]
+            },
+            {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9_]*(\\.[a-z][a-z0-9_]*)+$"
+            }
+          ]
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1
+        },
+        "resolution": {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "enum": [
+                "none",
+                "correct_input",
+                "read",
+                "recover",
+                "reauthenticate",
+                "request_decision"
+              ]
+            },
+            "action": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9_]*(\\.[a-z][a-z0-9_]*)+$"
+            }
+          },
+          "required": [
+            "kind"
+          ],
+          "additionalProperties": false,
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "kind": {
+                    "enum": [
+                      "read",
+                      "recover"
+                    ]
+                  }
+                }
+              },
+              "then": {
+                "required": [
+                  "action"
+                ]
+              }
+            }
+          ]
+        },
+        "details": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "code",
+        "message",
+        "resolution"
+      ],
+      "additionalProperties": false
+    },
+    "catalog": {
+      "type": "object",
+      "properties": {
+        "spec_version": {
+          "const": "0.2.0",
+          "description": "精确的 AXI 表示版本"
+        },
+        "kind": {
+          "const": "catalog",
+          "description": "文档类型"
+        },
+        "provider_id": {
+          "type": "string",
+          "minLength": 1,
+          "description": "提供方稳定标识"
+        },
+        "catalog_revision": {
+          "type": "string",
+          "minLength": 1,
+          "description": "目录修订"
+        },
+        "capabilities": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_]*(\\.[a-z][a-z0-9_]*)+$"
+              },
+              "purpose": {
+                "type": "string",
+                "minLength": 1
+              },
+              "effect": {
+                "enum": [
+                  "read",
+                  "view",
+                  "draft",
+                  "submit",
+                  "irreversible"
+                ]
+              },
+              "required_context": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
+              },
+              "contract_revision": {
+                "type": "string",
+                "minLength": 1
+              },
+              "contract_ref": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "name",
+              "purpose",
+              "effect",
+              "required_context",
+              "contract_revision",
+              "contract_ref"
+            ],
+            "additionalProperties": false
+          },
+          "description": "有界能力摘要集合"
+        },
+        "next_cursor": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "minLength": 1,
+          "description": "不透明继续游标；null 表示结束"
+        },
+        "extensions": {
+          "$ref": "#/$defs/extensions",
+          "description": "带命名空间的可选扩展"
+        }
+      },
+      "required": [
+        "spec_version",
+        "kind",
+        "provider_id",
+        "catalog_revision",
+        "capabilities",
+        "next_cursor"
+      ],
+      "additionalProperties": false
+    },
+    "action": {
+      "type": "object",
+      "properties": {
+        "spec_version": {
+          "const": "0.2.0",
+          "description": "精确的 AXI 表示版本"
+        },
+        "kind": {
+          "const": "action",
+          "description": "文档类型"
+        },
+        "name": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*(\\.[a-z][a-z0-9_]*)+$",
+          "description": "命名空间内的动作名"
+        },
+        "purpose": {
+          "type": "string",
+          "minLength": 1,
+          "description": "业务用途及选择条件"
+        },
+        "contract_revision": {
+          "type": "string",
+          "minLength": 1,
+          "description": "精确动作合同修订"
+        },
+        "effect": {
+          "enum": [
+            "read",
+            "view",
+            "draft",
+            "submit",
+            "irreversible"
+          ],
+          "description": "领域副作用分类"
+        },
+        "required_context": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true,
+          "description": "执行必需的输入上下文字段"
+        },
+        "input_schema": {
+          "type": "object",
+          "required": [
+            "$schema"
+          ],
+          "properties": {
+            "$schema": {
+              "const": "https://json-schema.org/draft/2020-12/schema"
+            }
+          },
+          "description": "业务输入的 Draft 2020-12 Schema"
+        },
+        "output_schema": {
+          "type": "object",
+          "required": [
+            "$schema"
+          ],
+          "properties": {
+            "$schema": {
+              "const": "https://json-schema.org/draft/2020-12/schema"
+            }
+          },
+          "description": "输出的 Draft 2020-12 Schema"
+        },
+        "authorization": {
+          "type": "string",
+          "minLength": 1,
+          "description": "最终授权与前置检查说明"
+        },
+        "idempotency": {
+          "oneOf": [
+            {
+              "type": "object",
+              "properties": {
+                "mode": {
+                  "const": "not_applicable"
+                }
+              },
+              "required": [
+                "mode"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "mode": {
+                  "const": "required"
+                },
+                "key_field": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "recovery_action": {
+                  "type": "string",
+                  "pattern": "^[a-z][a-z0-9_]*(\\.[a-z][a-z0-9_]*)+$"
+                },
+                "retention_seconds": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              },
+              "required": [
+                "mode",
+                "key_field",
+                "recovery_action",
+                "retention_seconds"
+              ],
+              "additionalProperties": false
+            }
+          ],
+          "description": "键、恢复入口与保留期合同"
+        },
+        "bindings": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "enum": [
+                  "cli",
+                  "mcp",
+                  "browser"
+                ]
+              },
+              "target": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "kind",
+              "target"
+            ],
+            "additionalProperties": false
+          },
+          "description": "现有载体及目标映射"
+        },
+        "extensions": {
+          "$ref": "#/$defs/extensions",
+          "description": "带命名空间的可选扩展"
+        }
+      },
+      "required": [
+        "spec_version",
+        "kind",
+        "name",
+        "purpose",
+        "contract_revision",
+        "effect",
+        "required_context",
+        "input_schema",
+        "output_schema",
+        "authorization",
+        "idempotency",
+        "bindings"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "effect": {
+                "enum": [
+                  "draft",
+                  "submit",
+                  "irreversible"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "idempotency": {
+                "properties": {
+                  "mode": {
+                    "const": "required"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "result": {
+      "type": "object",
+      "properties": {
+        "spec_version": {
+          "const": "0.2.0",
+          "description": "精确的 AXI 表示版本"
+        },
+        "kind": {
+          "const": "result",
+          "description": "文档类型"
+        },
+        "action": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*(\\.[a-z][a-z0-9_]*)+$",
+          "description": "此次结果对应的原动作"
+        },
+        "contract_revision": {
+          "type": "string",
+          "minLength": 1,
+          "description": "精确动作合同修订"
+        },
+        "status": {
+          "enum": [
+            "succeeded",
+            "pending",
+            "blocked",
+            "failed",
+            "partial",
+            "cancelled",
+            "unknown"
+          ],
+          "description": "证据支持的当前状态"
+        },
+        "context": {
+          "$ref": "#/$defs/context",
+          "description": "服务端验证的范围化上下文"
+        },
+        "operation": {
+          "$ref": "#/$defs/operation",
+          "description": "原操作引用与固定输入摘要"
+        },
+        "data": {
+          "type": "object",
+          "description": "领域结果与验证范围"
+        },
+        "error": {
+          "$ref": "#/$defs/error",
+          "description": "稳定代码、原因和解决方向"
+        },
+        "extensions": {
+          "$ref": "#/$defs/extensions",
+          "description": "带命名空间的可选扩展"
+        }
+      },
+      "required": [
+        "spec_version",
+        "kind",
+        "action",
+        "contract_revision",
+        "status",
+        "context"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "blocked",
+                  "failed",
+                  "unknown"
+                ]
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "error"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "succeeded",
+                  "pending",
+                  "partial",
+                  "cancelled"
+                ]
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "data"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "pending",
+                  "unknown"
+                ]
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "operation"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "unknown"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "error": {
+                "properties": {
+                  "code": {
+                    "const": "result_unknown"
+                  },
+                  "resolution": {
+                    "properties": {
+                      "kind": {
+                        "const": "recover"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "page": {
+      "type": "object",
+      "properties": {
+        "spec_version": {
+          "const": "0.2.0",
+          "description": "精确的 AXI 表示版本"
+        },
+        "kind": {
+          "const": "page",
+          "description": "文档类型"
+        },
+        "context": {
+          "$ref": "#/$defs/context",
+          "description": "服务端验证的范围化上下文"
+        },
+        "query_revision": {
+          "type": "string",
+          "minLength": 1,
+          "description": "绑定游标的查询标识或修订"
+        },
+        "items": {
+          "type": "array",
+          "description": "本页可见的结果项"
+        },
+        "next_cursor": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "minLength": 1,
+          "description": "不透明继续游标；null 表示结束"
+        },
+        "snapshot": {
+          "$ref": "#/$defs/snapshot",
+          "description": "一致性模式及可选快照修订"
+        },
+        "extensions": {
+          "$ref": "#/$defs/extensions",
+          "description": "带命名空间的可选扩展"
+        }
+      },
+      "required": [
+        "spec_version",
+        "kind",
+        "context",
+        "query_revision",
+        "items",
+        "next_cursor",
+        "snapshot"
+      ],
+      "additionalProperties": false
+    },
+    "batch": {
+      "type": "object",
+      "properties": {
+        "spec_version": {
+          "const": "0.2.0",
+          "description": "精确的 AXI 表示版本"
+        },
+        "kind": {
+          "const": "batch",
+          "description": "文档类型"
+        },
+        "context": {
+          "$ref": "#/$defs/context",
+          "description": "服务端验证的范围化上下文"
+        },
+        "status": {
+          "enum": [
+            "succeeded",
+            "partial"
+          ],
+          "description": "证据支持的当前状态"
+        },
+        "results": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "properties": {
+              "item_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "result": {
+                "$ref": "#/$defs/result"
+              }
+            },
+            "required": [
+              "item_id",
+              "result"
+            ],
+            "additionalProperties": false
+          },
+          "description": "按唯一 item_id 返回的逐项回执"
+        },
+        "snapshot": {
+          "$ref": "#/$defs/snapshot",
+          "description": "一致性模式及可选快照修订"
+        },
+        "extensions": {
+          "$ref": "#/$defs/extensions",
+          "description": "带命名空间的可选扩展"
+        }
+      },
+      "required": [
+        "spec_version",
+        "kind",
+        "context",
+        "status",
+        "results",
+        "snapshot"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

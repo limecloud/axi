@@ -12,6 +12,7 @@ from html.parser import HTMLParser
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import unquote, urlsplit
+from zipfile import ZipFile
 
 import yaml
 from playwright.sync_api import sync_playwright
@@ -43,7 +44,16 @@ class QuietHandler(SimpleHTTPRequestHandler):
         pass
 
 
+def source_hashes():
+    return {
+        str(path.relative_to(ROOT)): hashlib.sha256(path.read_bytes()).hexdigest()
+        for path in sorted(ROOT.rglob("*"))
+        if path.is_file() and not any(part in (".git", ".dev", "site", ".venv", "__pycache__") for part in path.relative_to(ROOT).parts)
+    }
+
+
 def main():
+    frozen_sources = source_hashes()
     assert (SITE / "index.html").is_file(), "请先运行 mkdocs build --strict"
     documents = {p: Document(p) for p in SITE.rglob("*.html")}
     checked_links = 0
@@ -69,21 +79,51 @@ def main():
     manifest = json.loads((ROOT / "content/assets/third-party.json").read_text())
     vendor = ROOT / "content/assets/mermaid.min.js"
     assert hashlib.sha256(vendor.read_bytes()).hexdigest() == manifest["sha256"]
-    source_pages = sorted((ROOT / "content").glob("*.md"))
+    source_pages = sorted((ROOT / "content").rglob("*.md"))
     for page in source_pages:
-        assert not re.search(r"纸团|zhituan|/Users/|\.\./\.\./|limecloud", page.read_text(), re.I), f"业务耦合：{page.name}"
+        assert not re.search(r"纸团|zhituan|/Users/|limecloud|file://", page.read_text(), re.I), f"业务耦合：{page.name}"
     diagrams = [match.group(1) for page in source_pages for match in re.finditer(r"```mermaid\n(.*?)```", page.read_text(), re.S)]
     assert diagrams, "未找到规范图表"
     assert (SITE / "llms.txt").is_file() and (SITE / "llms-full.txt").is_file()
+    agent_index = json.loads((SITE / "docs.json").read_text())
+    assert agent_index["build_source_sha256"] == frozen_sources, "构建产物与当前源码不一致，请重新构建"
+    requirements = json.loads((SITE / "requirements.json").read_text())
+    assert requirements["requirements"], "要求索引为空"
+    for item in requirements["requirements"]:
+        parsed = urlsplit(item["url"])
+        target = SITE / parsed.path / "index.html"
+        assert target in documents and parsed.fragment in documents[target].ids, item
 
     # SafeLoader 不识别 MkDocs 的配置标签，只需读取导航的纯 YAML 片段。
     config_text = (ROOT / "mkdocs.yml").read_text()
     nav_text = re.search(r"(?ms)^nav:\n(.*?)(?=^[^ \n]|\Z)", config_text).group(1)
     navigation = yaml.safe_load(nav_text)
-    routes = []
-    for item in navigation:
-        title, name = next(iter(item.items()))
-        routes.append((title, "" if name == "index.md" else name.removesuffix(".md") + "/"))
+    def pages(items):
+        for item in items:
+            for title, name in item.items():
+                if isinstance(name, list):
+                    yield from pages(name)
+                else:
+                    route = "" if name == "index.md" else name.removesuffix("index.md") if name.endswith("/index.md") else name.removesuffix(".md") + "/"
+                    yield title, route
+    routes = list(pages(navigation))
+    assert len(routes) == len(source_pages) == len(agent_index["pages"]), "导航与正文不一致"
+    for item in agent_index["pages"]:
+        path = SITE / item["source"]
+        assert path.is_file(), "Markdown 下载缺失"
+        assert hashlib.sha256(path.read_bytes()).hexdigest() == item["sha256"]
+        assert "<!-- axi-schema:" not in path.read_text(), "Markdown 字段表未展开"
+    with ZipFile(SITE / "downloads/document-review-skill.zip") as package:
+        assert package.namelist() == ["document-review/SKILL.md"]
+        assert package.read("document-review/SKILL.md") == (ROOT / "examples/review/skills/document-review/SKILL.md").read_bytes()
+    exported = [href for href in re.findall(r"\]\(([^)]+)\)", (SITE / "llms.txt").read_text())]
+    exported.extend(item[field] for item in agent_index["pages"] for field in ("url", "markdown"))
+    for href in exported:
+        path = unquote(urlsplit(href).path)
+        target = (SITE / path.removeprefix("/axi/").lstrip("/")).resolve()
+        if target.is_dir():
+            target /= "index.html"
+        assert target.is_relative_to(SITE) and target.is_file(), f"失效 Agent 入口：{href}"
 
     EVIDENCE.mkdir(exist_ok=True)
     errors, remote_requests, responses, cases = [], [], [], []
@@ -134,7 +174,8 @@ def main():
                         page.keyboard.press("Escape")
                     else:
                         page.locator('header label[for="__drawer"]').click()
-                        page.locator(".md-nav--primary").get_by_role("link", name="操作合同", exact=True).click()
+                        page.locator('.md-nav--primary label').filter(has_text=re.compile(r"^\s*参考\s*$")).last.click()
+                        page.locator(".md-nav--primary").get_by_role("link", name="合同导读", exact=True).click()
                         page.wait_for_url(base + "contracts/")
                         assert page.locator("article h1").inner_text().startswith("操作合同")
                     context.close()
@@ -146,11 +187,7 @@ def main():
     assert not errors, errors
     assert not responses, responses
     assert not remote_requests, remote_requests
-    source_hashes = {
-        str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest()
-        for p in sorted(ROOT.rglob("*"))
-        if p.is_file() and not any(part in (".git", ".dev", "site", ".venv", "__pycache__") for part in p.relative_to(ROOT).parts)
-    }
+    assert frozen_sources == source_hashes(), "验证期间源码变化，证据失效"
     result = {
         "checked_at": datetime.now(timezone.utc).isoformat(),
         "status": "passed",
@@ -160,12 +197,14 @@ def main():
         "viewports": [1440, 390],
         "local_links_checked": checked_links,
         "diagrams_parsed": len(diagrams),
+        "requirements_indexed": len(requirements["requirements"]),
+        "markdown_pages": len(agent_index["pages"]),
         "search": "passed",
         "mobile_navigation": "passed",
         "external_runtime_requests": remote_requests,
         "page_errors": errors,
         "cases": cases,
-        "source_sha256": source_hashes,
+        "source_sha256": frozen_sources,
     }
     (EVIDENCE / "site-validation.json").write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n")
     print(json.dumps({k: v for k, v in result.items() if k not in ("source_sha256", "cases")}, ensure_ascii=False, indent=2))

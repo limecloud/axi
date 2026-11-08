@@ -1,0 +1,20 @@
+{
+  "spec_version": "0.2.0",
+  "kind": "result",
+  "action": "documents.decide",
+  "contract_revision": "1",
+  "status": "blocked",
+  "context": {
+    "scope_id": "scope_demo",
+    "resource_id": "doc_contract_001",
+    "revision": 8
+  },
+  "error": {
+    "code": "revision_conflict",
+    "message": "文档修订已改变，需核对差异",
+    "resolution": {
+      "kind": "read",
+      "action": "documents.get"
+    }
+  }
+}

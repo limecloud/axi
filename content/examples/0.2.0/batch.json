@@ -1,0 +1,51 @@
+{
+  "spec_version": "0.2.0",
+  "kind": "batch",
+  "context": {
+    "scope_id": "scope_demo"
+  },
+  "status": "partial",
+  "results": [
+    {
+      "item_id": "one",
+      "result": {
+        "spec_version": "0.2.0",
+        "kind": "result",
+        "action": "documents.get",
+        "contract_revision": "1",
+        "status": "succeeded",
+        "context": {
+          "scope_id": "scope_demo",
+          "resource_id": "doc_contract_001",
+          "revision": 7
+        },
+        "data": {
+          "review_state": "pending"
+        }
+      }
+    },
+    {
+      "item_id": "two",
+      "result": {
+        "spec_version": "0.2.0",
+        "kind": "result",
+        "action": "documents.get",
+        "contract_revision": "1",
+        "status": "blocked",
+        "context": {
+          "scope_id": "scope_demo"
+        },
+        "error": {
+          "code": "forbidden",
+          "message": "当前身份无权读取该文档",
+          "resolution": {
+            "kind": "none"
+          }
+        }
+      }
+    }
+  ],
+  "snapshot": {
+    "mode": "best_effort"
+  }
+}

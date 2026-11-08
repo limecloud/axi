@@ -1,0 +1,7 @@
+{
+  "scope_id": "scope_demo",
+  "document_id": "doc_contract_001",
+  "expected_revision": 7,
+  "decision": "approve",
+  "operation_key": "review_contract_001"
+}

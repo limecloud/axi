@@ -1,0 +1,25 @@
+{
+  "spec_version": "0.2.0",
+  "kind": "result",
+  "action": "documents.decide",
+  "contract_revision": "1",
+  "status": "unknown",
+  "context": {
+    "scope_id": "scope_demo",
+    "resource_id": "doc_contract_001"
+  },
+  "operation": {
+    "id": "op_review_001",
+    "key": "review_contract_001",
+    "input_digest": "sha256:338d8961268bc41743e93655d7376939f0c476f18b4a9375ced7a03f45ceaa70",
+    "recover_action": "operations.get"
+  },
+  "error": {
+    "code": "result_unknown",
+    "message": "提交应答未到达；请核对原操作",
+    "resolution": {
+      "kind": "recover",
+      "action": "operations.get"
+    }
+  }
+}

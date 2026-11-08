@@ -1,5 +1,7 @@
 # 浏览器与人机界面
 
+本页面向网页与浏览器集成。网页、页面级工具、宿主浏览器控制和会话内 MCP App 是不同入口；App 的沙箱与桥接见[MCP Apps](ecosystem/mcp-apps.md)，DSH 的双组件与标签绑定见[桥接指南](ecosystem/dsh.md)。业务语义以[核心规范](specification/0.2.0/index.md)为准。
+
 ## 1. 先选择正确操作面
 
 ```mermaid

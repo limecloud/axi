@@ -23,6 +23,8 @@ jobs:
       - uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
         id: pages
       - run: python -m pip install -r requirements-test.txt
+      - run: python scripts/validate-contracts.py
+      - run: python -m unittest discover -s tests -v
       - run: mkdocs build --strict
         env:
           AXI_SITE_URL: ${{ steps.pages.outputs.base_url }}

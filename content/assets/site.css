@@ -1,5 +1,11 @@
 .md-grid { max-width: 1440px; }
 .md-typeset { font-size: .82rem; line-height: 1.8; }
+.md-typeset > p, .md-typeset > ul, .md-typeset > ol { max-width: 78ch; }
+.md-typeset h1 { color: var(--md-default-fg-color); margin-bottom: .8em; }
+.md-typeset code { overflow-wrap: anywhere; }
+.md-header { box-shadow: 0 1px 0 #e6e8eb; }
+.md-tabs { border-bottom: 1px solid #e6e8eb; }
+.md-typeset .admonition { font-size: .76rem; }
 .md-typeset h1, .md-typeset h2, .md-typeset h3 { font-weight: 650; letter-spacing: 0; }
 .md-typeset .axi-diagram { overflow-x: auto; padding: 20px 8px; border: 1px solid #e6e8eb; border-radius: 6px; }
 .md-typeset .axi-diagram svg { display: block; margin: auto; height: auto; min-width: 540px; }

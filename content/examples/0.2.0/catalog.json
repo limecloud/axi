@@ -1,0 +1,41 @@
+{
+  "spec_version": "0.2.0",
+  "kind": "catalog",
+  "provider_id": "axi-review-example",
+  "catalog_revision": "1",
+  "capabilities": [
+    {
+      "name": "documents.decide",
+      "purpose": "为指定修订的文档记录审批决定",
+      "effect": "submit",
+      "required_context": [
+        "scope_id",
+        "document_id"
+      ],
+      "contract_revision": "1",
+      "contract_ref": "review-action.json"
+    },
+    {
+      "name": "documents.get",
+      "purpose": "读取指定文档及当前修订",
+      "effect": "read",
+      "required_context": [
+        "scope_id",
+        "document_id"
+      ],
+      "contract_revision": "1",
+      "contract_ref": "get-action.json"
+    },
+    {
+      "name": "operations.get",
+      "purpose": "在当前获权范围查询原操作回执",
+      "effect": "read",
+      "required_context": [
+        "scope_id"
+      ],
+      "contract_revision": "1",
+      "contract_ref": "recover-action.json"
+    }
+  ],
+  "next_cursor": null
+}

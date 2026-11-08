@@ -1,5 +1,5 @@
-site_name: AXI 设计规范
-site_description: 面向 AI Agent 的操作界面标准
+site_name: AXI
+site_description: Agent eXperience Interface：规范、开发指南与实践
 site_url: !ENV [AXI_SITE_URL, ""]
 docs_dir: content
 site_dir: site
@@ -15,8 +15,13 @@ theme:
     primary: white
     accent: blue
   features:
+    - navigation.tabs
     - navigation.sections
+    - navigation.indexes
+    - navigation.top
     - navigation.footer
+    - search.suggest
+    - search.highlight
     - content.code.copy
 plugins:
   - search:
@@ -39,13 +44,64 @@ extra_javascript:
 extra_css:
   - assets/site.css
 nav:
-  - 开始阅读: index.md
-  - 原则与架构: architecture.md
-  - 操作合同: contracts.md
-  - 发现、Skills 与交付: discovery.md
-  - 浏览器与人机界面: browser.md
-  - 验证与符合性: verification.md
-  - 合同示例与采用清单: examples.md
-  - 参考与设计取舍: references.md
+  - 入门:
+      - 概览: index.md
+      - 快速上手: start/quickstart.md
+      - 架构: architecture.md
+      - 术语: start/glossary.md
+  - 生态与集成:
+      - 协作模型: ecosystem/index.md
+      - 兼容性矩阵: ecosystem/compatibility.md
+      - Skills 方法层: ecosystem/skills.md
+      - 插件与分发: ecosystem/plugins.md
+      - MCP Apps: ecosystem/mcp-apps.md
+      - DSH 与浏览器桥接: ecosystem/dsh.md
+      - 新载体适配: ecosystem/adapters.md
+  - 生命周期:
+      - 全流程: lifecycle/index.md
+      - 发现、安装与启用: lifecycle/install.md
+      - 连接、鉴权与授权: lifecycle/auth.md
+      - 发现、执行与核验: lifecycle/use.md
+      - 迭代、升级与迁移: lifecycle/update.md
+      - 测试、发布与回读: lifecycle/release.md
+      - 撤销、卸载与退役: lifecycle/retire.md
+  - 规范:
+      - 当前草案: specification/index.md
+      - 0.2.0:
+          - 范围与规范用语: specification/0.2.0/index.md
+          - 数据模型: specification/0.2.0/model.md
+          - 能力发现: specification/0.2.0/discovery.md
+          - 上下文与定位: specification/0.2.0/context.md
+          - 执行与授权: specification/0.2.0/execution.md
+          - 结果与状态: specification/0.2.0/results.md
+          - 错误: specification/0.2.0/errors.md
+          - 恢复与幂等: specification/0.2.0/recovery.md
+          - 分页与输出: specification/0.2.0/pagination.md
+          - 批量读取: specification/0.2.0/batch.md
+          - 等待与取消: specification/0.2.0/wait.md
+          - 版本与扩展: specification/0.2.0/versioning.md
+          - 安全: specification/0.2.0/security.md
+          - 集成生命周期: specification/0.2.0/lifecycle.md
+  - 开发:
+      - 提供方指南: develop/provider.md
+      - 客户端指南: develop/client.md
+      - CLI 绑定: develop/cli.md
+      - MCP 绑定: develop/mcp.md
+      - 浏览器与页面工具: browser.md
+      - Skills 与交付: discovery.md
+  - 实践:
+      - 减少回合与延迟: practices/performance.md
+      - 超时与恢复演练: practices/recovery.md
+      - 无浏览器与人工接管: practices/handoff.md
+      - 排障: practices/troubleshooting.md
+  - 参考:
+      - 合同导读: contracts.md
+      - Schema: reference/schema.md
+      - 示例: examples.md
+      - 验证与符合性: verification.md
+      - 采用清单: reference/adoption.md
+      - 贡献与演进: community/contributing.md
+      - 变更记录: community/changelog.md
+      - 来源与设计取舍: references.md
 extra:
   generator: false

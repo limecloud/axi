@@ -1,0 +1,13 @@
+{
+  "spec_version": "0.2.0",
+  "kind": "page",
+  "context": {
+    "scope_id": "scope_demo"
+  },
+  "query_revision": "documents-name-contract-v1",
+  "items": [],
+  "next_cursor": "opaque_page_2",
+  "snapshot": {
+    "mode": "best_effort"
+  }
+}
