@@ -1,0 +1,51 @@
+site_name: AXI 设计规范
+site_description: 面向 AI Agent 的操作界面标准
+site_url: !ENV [AXI_SITE_URL, ""]
+docs_dir: content
+site_dir: site
+use_directory_urls: true
+hooks:
+  - scripts/agent-index.py
+theme:
+  name: material
+  language: zh
+  font: false
+  palette:
+    scheme: default
+    primary: white
+    accent: blue
+  features:
+    - navigation.sections
+    - navigation.footer
+    - content.code.copy
+plugins:
+  - search:
+      lang: [zh, en]
+markdown_extensions:
+  - admonition
+  - tables
+  - attr_list
+  - toc:
+      permalink: true
+  - pymdownx.highlight
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: axi-diagram
+          format: !!python/name:pymdownx.superfences.fence_code_format
+extra_javascript:
+  - assets/mermaid.min.js
+  - assets/diagrams.js
+extra_css:
+  - assets/site.css
+nav:
+  - 开始阅读: index.md
+  - 原则与架构: architecture.md
+  - 操作合同: contracts.md
+  - 发现、Skills 与交付: discovery.md
+  - 浏览器与人机界面: browser.md
+  - 验证与符合性: verification.md
+  - 合同示例与采用清单: examples.md
+  - 参考与设计取舍: references.md
+extra:
+  generator: false

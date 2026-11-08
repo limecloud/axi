@@ -1,0 +1,7 @@
+.md-grid { max-width: 1440px; }
+.md-typeset { font-size: .82rem; line-height: 1.8; }
+.md-typeset h1, .md-typeset h2, .md-typeset h3 { font-weight: 650; letter-spacing: 0; }
+.md-typeset .axi-diagram { overflow-x: auto; padding: 20px 8px; border: 1px solid #e6e8eb; border-radius: 6px; }
+.md-typeset .axi-diagram svg { display: block; margin: auto; height: auto; min-width: 540px; }
+.md-typeset table:not([class]) { font-size: .74rem; }
+@media (max-width: 760px) { .md-typeset .axi-diagram { padding: 12px 0; } }
