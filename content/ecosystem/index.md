@@ -43,3 +43,14 @@ Skill 可以指导三条路径；不需要视觉的任务不应被强制拉进�
 每种载体都要回答：从哪里获得可信制品、怎么启用、如何连接身份、怎样发现和执行能力、如何升级而不破坏在途任务，以及如何撤销权限和卸载。完整流程见[生命周期](../lifecycle/index.md)。
 
 新载体通过[适配合同](adapters.md)加入；无需修改领域事实或复制业务规则。当前文档对接范围和实际实现状态见[兼容性矩阵](compatibility.md)。
+
+## 宿主适配
+
+每个宿主维护独立目录，分别记录公开接口、分发、身份、交互、运行时和验证范围。共同语义仍以核心规范为准，不把某个宿主接口推广为跨平台要求。
+
+| 宿主 | 本仓库文档范围 |
+| --- | --- |
+| [Codex](codex/index.md) | 插件、Skills、MCP、WebMCP、标注、MCP Apps、原生扩展、文件/消息、CLI/SDK/App Server、Hooks与事件 |
+| [Claude Code](claude-code/index.md) | 原生插件、方法、MCP、Hooks和Mods的初步调研与差距 |
+| [WorkBuddy](workbuddy/index.md) | Skills、连接器、渐进连接和浏览器Skill的初步调研与差距 |
+| [DSH](dsh/index.md) | 固定来源的原生插件与浏览器双组件机制 |

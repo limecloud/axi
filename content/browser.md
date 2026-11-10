@@ -1,6 +1,6 @@
 # 浏览器与人机界面
 
-本页面向网页与浏览器集成。网页、页面级工具、宿主浏览器控制和会话内 MCP App 是不同入口；App 的沙箱与桥接见[MCP Apps](ecosystem/mcp-apps.md)，DSH 的双组件与标签绑定见[桥接指南](ecosystem/dsh.md)。业务语义以[核心规范](specification/0.2.0/index.md)为准。
+本页面向网页与浏览器集成。网页、页面级工具、宿主浏览器控制和会话内 MCP App 是不同入口；App 的沙箱与桥接见[MCP Apps](ecosystem/mcp-apps.md)，DSH 的双组件与标签绑定见[桥接指南](ecosystem/dsh/index.md)。业务语义以[核心规范](specification/0.2.1/index.md)为准。
 
 ## 1. 先选择正确操作面
 
@@ -85,6 +85,8 @@ sequenceDiagram
 工具必须功能检测后注册，保持输入窄、作用域明确、结果可核对。页面卸载或上下文变更后，不得沿用旧注册中的身份与对象。宿主拒绝、API不存在、取消和注册失败都必须自然降级，不能阻断正常页面。
 
 WebMCP 的 API 和宿主支持仍可能变化；实现应当依照采用时的规范与宿主文档验证，不把某一浏览器的实现细节定义为 AXI 强制协议。只读注解不免除权限或调用审查。引用的网页内容、工具描述和结果是数据，不是额外授权。
+
+Codex的具体注册、frame范围、权限与生命周期见[WebMCP指南](ecosystem/codex/webmcp.md)。用户选区、评论、可逆预览和画布对象通过[标注扩展](ecosystem/codex/annotations.md)接入；它与Agent调用动作分开。普通网页、MCP App沙箱和本地客户端的能力不能互相假定，见[开放接口](ecosystem/codex/index.md)。
 
 ## 6. 开启引导与接管
 

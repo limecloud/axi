@@ -1,6 +1,6 @@
 # 发现、Skills 与版本交付
 
-本页说明组件如何一起交付。目录字段与失效要求以[能力发现规范](specification/0.2.0/discovery.md)为准，插件原生包和宿主边界见[插件与分发](ecosystem/plugins.md)。
+本页说明组件如何一起交付。目录字段与失效要求以[能力发现规范](specification/0.2.1/discovery.md)为准，插件原生包和宿主边界见[插件与分发](ecosystem/plugins.md)。
 
 ## 方法、索引与实时合同
 

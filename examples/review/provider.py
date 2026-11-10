@@ -14,7 +14,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 from contracts import validate_business, validate_document  # noqa: E402
 
 
-ACTION_PATH = ROOT / "content/examples/0.2.0/review-action.json"
+ACTION_PATH = ROOT / "content/examples/0.2.1/review-action.json"
 ACTION = json.loads(ACTION_PATH.read_text())
 RETENTION = ACTION["idempotency"]["retention_seconds"]
 
@@ -60,7 +60,7 @@ class Provider:
             context["resource_id"] = "doc_contract_001"
         if revision is not None:
             context["revision"] = revision
-        result = {"spec_version": "0.2.0", "kind": "result", "action": action,
+        result = {"spec_version": "0.2.1", "kind": "result", "action": action,
                   "contract_revision": "1", "status": status, "context": context}
         if data is not None:
             result["data"] = data

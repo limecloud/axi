@@ -43,4 +43,4 @@ flowchart TD
 
 独立本地不要求为了安装或创建目录而先建立远程账号。项目选择、不同OS默认目录和无界面路径见[本地工作区实践](../practices/local-workspaces.md)；是否启用远程能力按任务判断。
 
-从[安装与启用](install.md)到[鉴权](auth.md)，再到[执行与核验](use.md)。维护者继续阅读[升级](update.md)、[发布](release.md)和[退役](retire.md)。强制要求集中在[集成生命周期规范](../specification/0.2.0/lifecycle.md)。
+从[安装与启用](install.md)到[鉴权](auth.md)，再到[执行与核验](use.md)。维护者继续阅读[升级](update.md)、[发布](release.md)和[退役](retire.md)。强制要求集中在[集成生命周期规范](../specification/0.2.1/lifecycle.md)。

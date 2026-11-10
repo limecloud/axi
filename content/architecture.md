@@ -1,6 +1,6 @@
 # 原则与架构
 
-本页解释 AXI 的系统边界。规范要求集中在[版本化规范](specification/0.2.0/index.md)，跨 CLI、MCP、Skills、插件、MCP Apps 与原生宿主的分层见[协作模型](ecosystem/index.md)。
+本页解释 AXI 的系统边界。规范要求集中在[版本化规范](specification/0.2.1/index.md)，跨 CLI、MCP、Skills、插件、MCP Apps 与原生宿主的分层见[协作模型](ecosystem/index.md)。
 
 ## 1. 两类界面，同一业务
 

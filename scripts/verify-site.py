@@ -168,7 +168,8 @@ def main():
                     page.goto(base, wait_until="networkidle")
                     if width == 1440:
                         page.wait_for_function("""() => !document.querySelector('.md-search-result__meta').textContent.includes('正在初始化')""")
-                        page.locator(".md-search__input").fill("Schema")
+                        page.locator(".md-search__input").click()
+                        page.locator(".md-search__input").press_sequentially("Schema")
                         page.locator(".md-search-result__item").first.wait_for()
                         assert page.locator(".md-search-result__item").count() > 0
                         page.keyboard.press("Escape")

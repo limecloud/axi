@@ -1,21 +1,21 @@
 # 示例
 
-本组示例使用独立的“文档审批”领域说明 AXI 0.2.0。它不对应已上线业务，不依赖外部账号、图片或服务。
+本组示例使用独立的“文档审批”领域说明 AXI 0.2.1。它不对应已上线业务，不依赖外部账号、图片或服务。
 
 ## 文件
 
 | 文件 | 用途 | 验证方式 |
 | --- | --- | --- |
-| [catalog.json](examples/0.2.0/catalog.json) | 三项能力的轻量目录 | AXI Schema 与引用一致性 |
-| [review-action.json](examples/0.2.0/review-action.json) | 审批输入、输出、授权与恢复合同 | Schema、业务 Schema 和恢复动作解析 |
-| [get-action.json](examples/0.2.0/get-action.json) | 读取文档 | Schema 与目录一致性 |
-| [recover-action.json](examples/0.2.0/recover-action.json) | 查回原操作 | Schema 与目录一致性 |
-| [review-input.json](examples/0.2.0/review-input.json) | 固定审批输入 | 审批 input_schema |
-| [succeeded.json](examples/0.2.0/succeeded.json) | 决定持久化后的回执 | AXI 与业务输出 Schema |
-| [unknown.json](examples/0.2.0/unknown.json) | 应答未知与原操作引用 | 恢复字段、错误和输入摘要 |
-| [blocked.json](examples/0.2.0/blocked.json) | 条件修订冲突 | 稳定错误与读取方向 |
-| [page.json](examples/0.2.0/page.json) | 空页仍有下一游标 | 游标与快照模式 |
-| [batch.json](examples/0.2.0/batch.json) | 只读批量的成功/拒绝混合 | 唯一 item_id、逐项状态与范围 |
+| [catalog.json](examples/0.2.1/catalog.json) | 三项能力的轻量目录 | AXI Schema 与引用一致性 |
+| [review-action.json](examples/0.2.1/review-action.json) | 审批输入、输出、授权与恢复合同 | Schema、业务 Schema 和恢复动作解析 |
+| [get-action.json](examples/0.2.1/get-action.json) | 读取文档 | Schema 与目录一致性 |
+| [recover-action.json](examples/0.2.1/recover-action.json) | 查回原操作 | Schema 与目录一致性 |
+| [review-input.json](examples/0.2.1/review-input.json) | 固定审批输入 | 审批 input_schema |
+| [succeeded.json](examples/0.2.1/succeeded.json) | 决定持久化后的回执 | AXI 与业务输出 Schema |
+| [unknown.json](examples/0.2.1/unknown.json) | 应答未知与原操作引用 | 恢复字段、错误和输入摘要 |
+| [blocked.json](examples/0.2.1/blocked.json) | 条件修订冲突 | 稳定错误与读取方向 |
+| [page.json](examples/0.2.1/page.json) | 空页仍有下一游标 | 游标与快照模式 |
+| [batch.json](examples/0.2.1/batch.json) | 只读批量的成功/拒绝混合 | 唯一 item_id、逐项状态与范围 |
 
 ## 跑通闭环
 

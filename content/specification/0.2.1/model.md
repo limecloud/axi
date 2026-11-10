@@ -6,7 +6,7 @@ AXI JSON 表示由五种文档组成。它们可以是静态制品，也可以�
 
 | 字段 | 类型 | 含义 |
 | --- | --- | --- |
-| `spec_version` | 固定字符串 `0.2.0` | 本文档使用的 AXI 表示版本 |
+| `spec_version` | 固定字符串 `0.2.1` | 本文档使用的 AXI 表示版本 |
 | `kind` | 字符串枚举 | `catalog`、`action`、`result`、`page` 或 `batch` |
 | `extensions` | 可选对象 | 显式命名空间下的可选扩展数据 |
 
@@ -40,7 +40,7 @@ AXI JSON 表示由五种文档组成。它们可以是静态制品，也可以�
 
 ```json
 {
-  "spec_version": "0.2.0",
+  "spec_version": "0.2.1",
   "kind": "result",
   "action": "documents.get",
   "contract_revision": "1",

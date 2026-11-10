@@ -1,5 +1,5 @@
 {
-  "spec_version": "0.2.0",
+  "spec_version": "0.2.1",
   "kind": "action",
   "name": "documents.get",
   "purpose": "读取指定文档及当前修订",
@@ -30,7 +30,7 @@
   },
   "output_schema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$ref": "../../schemas/0.2.0/axi.schema.json#/$defs/result"
+    "$ref": "../../schemas/0.2.1/axi.schema.json#/$defs/result"
   },
   "authorization": "从调用身份核对 scope_demo 读取权限；审批写入还需 reviewer 权限。此例身份由本地程序模拟。",
   "idempotency": {

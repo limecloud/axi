@@ -5,7 +5,7 @@
 ## 声明
 
 ```yaml
-spec_version: "0.2.0"
+spec_version: "0.2.1"
 spec_status: draft
 provider_id: "<提供方稳定标识>"
 artifact_version: "<实际制品版本>"
@@ -38,6 +38,9 @@ evidence: []
 | 本地工作区 | 目录选择、OS默认根、源文件/内部状态/索引分工、外部编辑、搬移和一致备份 |
 | 数据保留 | 临时取得期限、配额、引用/unknown保护、删除确认与费用审计分离 |
 | 渐进使用与选择 | 首个业务结果、默认值、按需连接、宿主原生选择/能力协商、拒绝/取消/无界面降级 |
+| 宿主扩展 | 普通网页、MCP App与本地客户端分别记录API和权限；WebMCP、标注、原生面板/文件/消息逐项验收 |
+
+Codex采用方可使用[逐接口验证矩阵](../ecosystem/codex/verification.md)；其他宿主在各自目录维护独立证据，不继承Codex结论。
 
 ## 要求映射
 

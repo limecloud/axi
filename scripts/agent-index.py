@@ -46,7 +46,7 @@ def requirements(config):
                            "url": route(name) + "#" + identifier.lower()})
     if not output:
         raise PluginError("没有找到规范要求")
-    return {"spec_version": "0.2.0", "requirements": output}
+    return {"spec_version": "0.2.1", "requirements": output}
 
 
 def on_files(files, config, **kwargs):
@@ -76,7 +76,7 @@ def schema_type(value):
 
 
 def on_page_markdown(markdown, page, config, **kwargs):
-    schema = json.loads((Path(config["docs_dir"]) / "schemas/0.2.0/axi.schema.json").read_text())
+    schema = json.loads((Path(config["docs_dir"]) / "schemas/0.2.1/axi.schema.json").read_text())
 
     def table(match):
         definition = schema["$defs"][match.group(1)]
@@ -102,7 +102,7 @@ def on_post_build(config, **kwargs):
         "> 面向 Agent 的操作界面：发现、定位、执行、观察、恢复与验证。",
         "",
         "独立设计草案；不是行业统一标准，也不隶属于同名项目。",
-        "当前规范为 0.2.0 草案，未发布稳定版。文档不授予业务权限。",
+        "当前规范为 0.2.1 草案，未发布稳定版。文档不授予业务权限。",
         "",
     ]
     full = ["# AXI 设计规范全文", ""]
@@ -125,7 +125,7 @@ def on_post_build(config, **kwargs):
                       "markdown": raw, "source": name,
                       "sha256": hashlib.sha256(content.encode()).hexdigest()})
     summary.extend(["", "## 机器入口", "", f"- [要求索引]({address('requirements.json')})",
-                    f"- [文档索引]({address('docs.json')})", f"- [Schema]({address('schemas/0.2.0/axi.schema.json')})",
+                    f"- [文档索引]({address('docs.json')})", f"- [Schema]({address('schemas/0.2.1/axi.schema.json')})",
                     f"- [完整 Markdown 正文]({address('llms-full.txt')})", ""])
     (site / "llms.txt").write_text("\n".join(summary))
     (site / "llms-full.txt").write_text("\n".join(full))
@@ -135,4 +135,4 @@ def on_post_build(config, **kwargs):
         for path in sorted(root.rglob("*"))
         if path.is_file() and not any(part in (".git", ".dev", "site", ".venv", "__pycache__") for part in path.relative_to(root).parts)
     }
-    (site / "docs.json").write_text(json.dumps({"spec_version": "0.2.0", "pages": index, "build_source_sha256": sources}, ensure_ascii=False, indent=2) + "\n")
+    (site / "docs.json").write_text(json.dumps({"spec_version": "0.2.1", "pages": index, "build_source_sha256": sources}, ensure_ascii=False, indent=2) + "\n")

@@ -21,6 +21,8 @@ package/
 
 原生清单的精确字段、Schema 版本与适用表面按官方文档冻结。迁移不能只把 `.mcp.json` 改名：格式和 transport 声明也可能不同。本文不提供未经当前宿主验证的“万能清单”。
 
+Codex的逐接口、宿主表面及生命周期说明集中在[独立目录](codex/index.md)，其中区分WebMCP、浏览器标注、MCP App与SDK。其他宿主分别见[Claude Code](claude-code/index.md)、[WorkBuddy](workbuddy/index.md)和[DSH](dsh/index.md)。
+
 ## 安装来源与信任
 
 仓库/个人 marketplace、工作区发布和公共目录是不同渠道，权限和安装策略可能不同。安装器应展示发行者、精确版本、来源及所需执行/连接能力；不能把“来自 GitHub”当作可信证明。

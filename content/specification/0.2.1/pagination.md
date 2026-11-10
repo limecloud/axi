@@ -12,7 +12,7 @@
 
 ```json
 {
-  "spec_version": "0.2.0",
+  "spec_version": "0.2.1",
   "kind": "page",
   "context": {"scope_id": "scope_demo"},
   "query_revision": "documents-name-contract-v1",

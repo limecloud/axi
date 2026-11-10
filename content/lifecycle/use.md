@@ -50,4 +50,4 @@ sequenceDiagram
 
 审批例子只核对决定已记录；媒体任务还需读取实际产物并检查其质量；费用另读权威状态。部分失败保留已成功项，未知保持原操作恢复，不能以完整成功掩盖未测的视觉或外部依赖。
 
-具体要求见[结果](../specification/0.2.0/results.md)和[恢复](../specification/0.2.0/recovery.md)，可运行路径见[快速上手](../start/quickstart.md)。
+具体要求见[结果](../specification/0.2.1/results.md)和[恢复](../specification/0.2.1/recovery.md)，可运行路径见[快速上手](../start/quickstart.md)。

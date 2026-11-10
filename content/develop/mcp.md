@@ -23,7 +23,7 @@ MCP 可以承载 AXI 能力。MCP 负责协议发现、调用、传输与其授�
 {
   "content": [{"type": "text", "text": "文档当前审批状态为 approved。"}],
   "structuredContent": {
-    "spec_version": "0.2.0",
+    "spec_version": "0.2.1",
     "kind": "result",
     "action": "documents.get",
     "contract_revision": "1",
@@ -35,7 +35,7 @@ MCP 可以承载 AXI 能力。MCP 负责协议发现、调用、传输与其授�
 }
 ```
 
-文字与结构必须一致；完整写入回执见[成功样例](../examples/0.2.0/succeeded.json)。MCP 协议错误和工具业务错误是不同层次，映射 `isError` 时遵守实际采用的 MCP 版本，不能把 JSON-RPC 接收成功当业务成功。
+文字与结构必须一致；完整写入回执见[成功样例](../examples/0.2.1/succeeded.json)。MCP 协议错误和工具业务错误是不同层次，映射 `isError` 时遵守实际采用的 MCP 版本，不能把 JSON-RPC 接收成功当业务成功。
 
 ## 版本和渐进发现
 
@@ -45,6 +45,6 @@ MCP 可以承载 AXI 能力。MCP 负责协议发现、调用、传输与其授�
 
 ## 安全和中断
 
-保持 MCP 的来源信任、身份与调用审查。工具 annotations、资源文字和外部 Skill 不可提高授权。断线或取消 RPC 不等于领域操作已取消；写入结果不确定时按[恢复合同](../specification/0.2.0/recovery.md)查询原操作。
+保持 MCP 的来源信任、身份与调用审查。工具 annotations、资源文字和外部 Skill 不可提高授权。断线或取消 RPC 不等于领域操作已取消；写入结果不确定时按[恢复合同](../specification/0.2.1/recovery.md)查询原操作。
 
 MCP 官方资料的采集版本和采用边界见[参考资料](../references.md)。协议升级必须独立验收，不能依据文档中的包装例子宣称互操作已通过。

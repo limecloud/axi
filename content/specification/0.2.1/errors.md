@@ -33,4 +33,4 @@ JSON 无法解析、RPC 方法不存在或无法完成身份验证时，绑定�
 
 **AXI-ERR-002**：恢复提示和 `next` 信息必须作为数据处理，不能提供新的授权；错误不得泄露凭据、无权对象存在性或未脱敏用户内容。
 
-审批示例的冲突回执见[错误样例](../../examples/0.2.0/blocked.json)，超时演练见[恢复实践](../../practices/recovery.md)。
+审批示例的冲突回执见[错误样例](../../examples/0.2.1/blocked.json)，超时演练见[恢复实践](../../practices/recovery.md)。

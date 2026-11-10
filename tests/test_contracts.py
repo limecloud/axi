@@ -20,7 +20,7 @@ module = importlib.util.spec_from_file_location("review_provider", ROOT / "examp
 provider_module = importlib.util.module_from_spec(module)
 module.loader.exec_module(provider_module)
 Provider = provider_module.Provider
-EXAMPLES = ROOT / "content/examples/0.2.0"
+EXAMPLES = ROOT / "content/examples/0.2.1"
 
 
 def fixture(name):

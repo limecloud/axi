@@ -12,11 +12,11 @@ from contracts import ROOT, SCHEMA, validate_package
 
 def main():
     Draft202012Validator.check_schema(SCHEMA)
-    count = validate_package(ROOT / "content/examples/0.2.0")
+    count = validate_package(ROOT / "content/examples/0.2.1")
     skill = (ROOT / "examples/review/skills/document-review/SKILL.md").read_text()
     metadata = yaml.safe_load(skill.split("---", 2)[1])
     assert metadata["name"] == "document-review" and metadata["description"]
-    catalog = json.loads((ROOT / "content/examples/0.2.0/catalog.json").read_text())
+    catalog = json.loads((ROOT / "content/examples/0.2.1/catalog.json").read_text())
     actions = {entry["name"] for entry in catalog["capabilities"]}
     mentioned = set(re.findall(r"`([a-z]+\.[a-z_]+)`", skill))
     assert mentioned == actions, "方法引用与示例能力目录不一致"
@@ -24,7 +24,7 @@ def main():
     evidence.mkdir(exist_ok=True)
     result = {
         "checked_at": datetime.now(timezone.utc).isoformat(),
-        "spec_version": "0.2.0",
+        "spec_version": "0.2.1",
         "status": "passed",
         "documents_validated": count,
         "skill_references": sorted(mentioned),

@@ -55,7 +55,20 @@ nav:
       - Skills 方法层: ecosystem/skills.md
       - 插件与分发: ecosystem/plugins.md
       - MCP Apps: ecosystem/mcp-apps.md
-      - DSH 与浏览器桥接: ecosystem/dsh.md
+      - Codex:
+          - 开放接口概览: ecosystem/codex/index.md
+          - 插件、Skills 与连接: ecosystem/codex/plugins.md
+          - WebMCP 页面工具: ecosystem/codex/webmcp.md
+          - Browser Annotation API: ecosystem/codex/annotations.md
+          - 原生界面、文件与会话: ecosystem/codex/interfaces.md
+          - CLI、SDK 与运行时: ecosystem/codex/runtime.md
+          - 接入验证: ecosystem/codex/verification.md
+      - Claude Code:
+          - 接入与调研: ecosystem/claude-code/index.md
+      - WorkBuddy:
+          - 接入与调研: ecosystem/workbuddy/index.md
+      - DSH:
+          - 原生能力与浏览器桥接: ecosystem/dsh/index.md
       - 新载体适配: ecosystem/adapters.md
   - 生命周期:
       - 全流程: lifecycle/index.md
@@ -67,21 +80,21 @@ nav:
       - 撤销、卸载与退役: lifecycle/retire.md
   - 规范:
       - 当前草案: specification/index.md
-      - 0.2.0:
-          - 范围与规范用语: specification/0.2.0/index.md
-          - 数据模型: specification/0.2.0/model.md
-          - 能力发现: specification/0.2.0/discovery.md
-          - 上下文与定位: specification/0.2.0/context.md
-          - 执行与授权: specification/0.2.0/execution.md
-          - 结果与状态: specification/0.2.0/results.md
-          - 错误: specification/0.2.0/errors.md
-          - 恢复与幂等: specification/0.2.0/recovery.md
-          - 分页与输出: specification/0.2.0/pagination.md
-          - 批量读取: specification/0.2.0/batch.md
-          - 等待与取消: specification/0.2.0/wait.md
-          - 版本与扩展: specification/0.2.0/versioning.md
-          - 安全: specification/0.2.0/security.md
-          - 集成生命周期: specification/0.2.0/lifecycle.md
+      - 0.2.1:
+          - 范围与规范用语: specification/0.2.1/index.md
+          - 数据模型: specification/0.2.1/model.md
+          - 能力发现: specification/0.2.1/discovery.md
+          - 上下文与定位: specification/0.2.1/context.md
+          - 执行与授权: specification/0.2.1/execution.md
+          - 结果与状态: specification/0.2.1/results.md
+          - 错误: specification/0.2.1/errors.md
+          - 恢复与幂等: specification/0.2.1/recovery.md
+          - 分页与输出: specification/0.2.1/pagination.md
+          - 批量读取: specification/0.2.1/batch.md
+          - 等待与取消: specification/0.2.1/wait.md
+          - 版本与扩展: specification/0.2.1/versioning.md
+          - 安全: specification/0.2.1/security.md
+          - 集成生命周期: specification/0.2.1/lifecycle.md
   - 开发:
       - 提供方指南: develop/provider.md
       - 客户端指南: develop/client.md

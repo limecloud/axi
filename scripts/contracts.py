@@ -11,7 +11,7 @@ from referencing.exceptions import NoSuchResource
 
 ROOT = Path(__file__).resolve().parents[1]
 CONTENT = ROOT / "content"
-SCHEMA_PATH = CONTENT / "schemas/0.2.0/axi.schema.json"
+SCHEMA_PATH = CONTENT / "schemas/0.2.1/axi.schema.json"
 SCHEMA = json.loads(SCHEMA_PATH.read_text())
 
 

@@ -1,6 +1,43 @@
 # 参考与设计取舍
 
-资料核对日期：2026-11-08。以下是独立来源与适用范围，正文要求已经完整写入规范，不依赖读者跳转外站才能实施。外部页面更新不会自动修改本规范；变更采纳须重新评估与验证。
+基础资料核对日期：2026-11-08；Codex开放接口及其他宿主补充资料核对日期：2026-11-09。以下是独立来源与适用范围，正文要求已经完整写入规范，不依赖读者跳转外站才能实施。外部页面更新不会自动修改本规范；变更采纳须重新评估与验证。
+
+<a id="codex-sources"></a>
+
+## Codex 开放接口来源
+
+本轮从官方索引定位并读取以下Markdown正文。它们是独立事实来源，正文中的字段、范围与限制在采纳时冻结；实际账号、SDK和宿主可用性仍需单独验收。当前Agent会话的工具清单不作为第三方公开SDK依据。
+
+| 来源 | 核对内容 | 采用与边界 |
+| --- | --- | --- |
+| [官方插件索引](https://developers.openai.com/plugins.md)、[Codex文档索引](https://developers.openai.com/codex/llms.txt) | 官方文档定位与Markdown入口 | 索引定位后读取正文，不把导航或搜索摘要当接口合同 |
+| [Skills概念](https://developers.openai.com/plugins/concepts/skills.md)、[Build skills](https://learn.chatgpt.com/docs/build-skills.md) | 触发、资源、openai.yaml与依赖 | 方法与实时工具/身份分层 |
+| [插件打包](https://developers.openai.com/plugins/build/plugins.md)、[使用插件](https://learn.chatgpt.com/docs/plugins.md) | 根清单、OpenAI overlay、分发、新会话、CLI和IDE边界 | 包格式与宿主表面分开，内联overlay不合并兼容清单 |
+| [鉴权](https://developers.openai.com/plugins/build/auth.md)、[MCP接入](https://learn.chatgpt.com/docs/extend/mcp.md) | OAuth、profile、多账号、stdio/HTTP和instructions | 连接身份不继承网页Cookie，instructions前512字符自洽 |
+| [Site tools](https://learn.chatgpt.com/docs/webmcp.md) | document.modelContext、frame来源、权限和逐调用审查 | 当前限定桌面内置浏览器；不把WebMCP当远程MCP |
+| [Annotations Extensibility](https://learn.chatgpt.com/docs/annotations-extensibility.md) | request、DOM/Range、metadata、controls、surface、toggle与清理 | 顶层安全文档；accepted不证明打开/保存/发送，取消异步命中需settle |
+| [Browser](https://learn.chatgpt.com/docs/browser.md)、[Computer Use](https://learn.chatgpt.com/docs/computer-use.md) | 标注流程、站点权限、上传限制、开发者模式 | 不为普通页面集成要求full CDP或全局桌面控制 |
+| [MCP App UI](https://developers.openai.com/plugins/build/chatgpt-ui.md)、[UI Reference](https://developers.openai.com/plugins/reference.md) | ui桥接、window.openai、文件、状态、模式与CSP | 标准优先，组件桥接不写成普通网页API |
+| [Plugin Extensions](https://developers.openai.com/plugins/build/extensions.md) | 11类原生扩展、global/thread/file入口、增强表单 | 官方主要描述ChatGPT界面，不推导全Codex表面支持；未读取其链接仓库完整协议，不补造底层字段 |
+| [CLI命令](https://learn.chatgpt.com/docs/developer-commands.md)、[非交互模式](https://learn.chatgpt.com/docs/non-interactive-mode.md) | plugin JSON、marketplace、exec事件与结果 | 按目标版本help核对；不沿用已移除的full-auto |
+| [Codex SDK](https://learn.chatgpt.com/docs/codex-sdk.md)、[App Server](https://learn.chatgpt.com/docs/app-server.md) | TS/Python、线程、流、审批、输入、elicitation与实验边界 | 自有客户端与用户现有桌面会话分开；按本机版本生成Schema |
+| [Hooks](https://learn.chatgpt.com/docs/hooks.md) | 信任、处理器、本地/云端、MCP hook错误行为 | 不把可能放行的hook作为服务唯一授权门禁 |
+| [MCP Events](https://developers.openai.com/plugins/build/mcp-events.md) | 事件发现、订阅、签名、回放与退订 | ChatGPT集成与草案范围；2xx仅接收，不代表处理完成 |
+| [测试](https://developers.openai.com/plugins/deploy/connect-chatgpt.md)、[提交](https://developers.openai.com/plugins/deploy/submission.md)、[Desktop only](https://developers.openai.com/plugins/deploy/desktop-only.md) | 宿主测试、资格、扫描、审核、发布与更新 | 本地可运行不等于获准公共目录，含hooks包的资格限制独立核对 |
+
+官方页面可能存在引用和命令清单更新不同步的情况。例如SDK正文说明旧Codex MCP Server入口已移除，而命令索引仍保留相关标题。本指南选用SDK/App Server方向，不从索引标题重建过时入口；实现仍读目标版本help及生成合同。
+
+<a id="other-host-sources"></a>
+
+## 其他宿主补充来源
+
+以下只建立独立调研基线，不表示本轮完成全部宿主的安装和运行验证。
+
+| 宿主与来源 | 已读内容 | 未推导的结论 |
+| --- | --- | --- |
+| Claude Code：[插件](https://code.claude.com/docs/en/plugins.md)、[组件](https://code.claude.com/docs/en/plugins/components.md)、[安装](https://code.claude.com/docs/en/plugins/install.md)、[Mods](https://code.claude.com/docs/en/plugins/mods/overview.md) | 清单、Skills、Agents、Hooks、MCP与JavaScript模块的扩展方向 | 未宣称与Codex原生UI、WebMCP或标注API兼容 |
+| WorkBuddy：[Skills](https://www.workbuddy.cn/docs/workbuddy/From-Beginner-to-Expert-Guide/Function-Description/Skills-Market)、[连接器](https://www.workbuddy.cn/docs/workbuddy/From-Beginner-to-Expert-Guide/Function-Description/Connector)、[Agent Browser](https://www.workbuddy.cn/docs/workbuddy/From-Beginner-to-Expert-Guide/WorkBuddy-Zero-Cost-Skill-Top-10/Agent-Browser)、[上手技巧](https://www.workbuddy.cn/docs/workbuddy/From-Beginner-to-Expert-Guide/Efficient-Tips) | 技能安装/开关、连接器形态、按需授权和恢复、浏览器Skill | 不把CodeBuddy当WorkBuddy，不从官网llms产品说明推导开放SDK或本地零外发 |
+| DSH：[固定README](https://github.com/omdsh-dev/dsh-browser/blob/f7bafd3191e96745cb94a1074d189e23a30b3d3b/README.md) | 双组件、快照/动作、标签绑定与许可；再次读取原文 | 不把main变化或作者基准传播为跨宿主性能保证 |
 
 ## 文档结构与生态依据
 

@@ -6,7 +6,7 @@
 
 ## 简介
 
-将 Agent 作为产品的一类正式使用者，为它提供与人类界面共享业务语义、权限和状态的操作界面。当前为 AXI（Agent eXperience Interface）0.2.0 草案，不声明为行业统一标准或既有 AXI 项目的官方版本。
+将 Agent 作为产品的一类正式使用者，为它提供与人类界面共享业务语义、权限和状态的操作界面。当前为 AXI（Agent eXperience Interface）0.2.1 草案，不声明为行业统一标准或既有 AXI 项目的官方版本。
 
 文档独立于特定业务、宿主和部署域名。外部资料集中在参考文献，正文完整说明采纳的规则，不以外链代替规范。
 
@@ -14,7 +14,8 @@
 
 - 理解与试跑 → [首页](content/index.md)、[本地快速上手](content/start/quickstart.md)
 - 产品接入 → [生态分层](content/ecosystem/index.md)、[生命周期](content/lifecycle/index.md)、[提供方指南](content/develop/provider.md)
-- 合同实现 → [版本化规范](content/specification/0.2.0/index.md)、[Schema](content/schemas/0.2.0/axi.schema.json)
+- 宿主适配 → [Codex 开放接口](content/ecosystem/codex/index.md)、[Claude Code](content/ecosystem/claude-code/index.md)、[WorkBuddy](content/ecosystem/workbuddy/index.md)、[DSH](content/ecosystem/dsh/index.md)
+- 合同实现 → [版本化规范](content/specification/0.2.1/index.md)、[Schema](content/schemas/0.2.1/axi.schema.json)
 - 维护与验收 → [验证](content/verification.md)、[采用清单](content/reference/adoption.md)、[贡献](content/community/contributing.md)
 
 ## 快速上手

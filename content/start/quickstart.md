@@ -25,7 +25,7 @@ uv run --no-project --with-requirements requirements-test.txt python examples/re
 ## 2. 提交并模拟丢失应答
 
 ```bash
-uv run --no-project --with-requirements requirements-test.txt python examples/review/provider.py --db .dev/review.sqlite decide --input content/examples/0.2.0/review-input.json --drop-response
+uv run --no-project --with-requirements requirements-test.txt python examples/review/provider.py --db .dev/review.sqlite decide --input content/examples/0.2.1/review-input.json --drop-response
 ```
 
 程序先持久化审批，再输出 `unknown` 并以退出码 `3` 结束，模拟客户端未收到提交应答。数据库中可能已发生副作用，不能通过换键重试判断结果。
@@ -43,4 +43,4 @@ uv run --no-project --with-requirements requirements-test.txt python examples/re
 
 本例用 SQLite 事务保存领域写入与操作记录，便于观察原子性。它没有真实会话、网络传输、计费、异步工作器或持久恢复 SLA。测试中的失权由模拟身份注入，只证明调用顺序和拒绝行为。生产实现见[提供方指南](../develop/provider.md)。
 
-下一步：阅读[数据模型](../specification/0.2.0/model.md)，或运行[文档站验收](../verification.md)。
+下一步：阅读[数据模型](../specification/0.2.1/model.md)，或运行[文档站验收](../verification.md)。
